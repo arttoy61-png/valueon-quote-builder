@@ -2,7 +2,7 @@
   const $ = (id) => document.getElementById(id);
   const watched = [
     'clientName','quoteNo','quoteDate','validity','manager','contact',
-    'productName','tagline','description','keywords','spec','size','material',
+    'productName','tagline','description','spec','size','material',
     'options','custom','moq','quantity','unitPrice','vatType','shipping',
     'shippingNote','note'
   ];
@@ -16,7 +16,6 @@
     productName:'354ml 손잡이형 머그',
     tagline:'일상에 자연스럽게 어울리는 컬러 머그',
     description:'감각적인 컬러와 실용적인 용량으로 브랜드 굿즈, 판촉물, 카페 상품 등 다양한 용도로 활용 가능합니다.',
-    keywords:'카페 · 기업 굿즈 · 브랜드 상품 · 판촉물 · 맞춤 제작',
     spec:'354ml (12oz)',
     size:'약 Ø85 × H98 mm',
     material:'세라믹(도자기)',
@@ -33,7 +32,6 @@
 
   let imageData = '';
   let imageNatural = { width:0, height:0 };
-  let imageLayout = 'square';
 
   function todayISO(){
     const d=new Date();
@@ -67,31 +65,6 @@
     }
     return {qty,unit,shipping,supply,vat,total:goodsTotal+shipping,vatType};
   }
-  function keywordList(){
-    return value('keywords').split(/[·,\n]+/).map(s=>s.trim()).filter(Boolean).slice(0,6);
-  }
-  function renderKeywords(){
-    const box=$('pvKeywords');
-    box.innerHTML='';
-    keywordList().forEach(t=>{
-      const s=document.createElement('span');
-      s.textContent=t;
-      box.appendChild(s);
-    });
-  }
-  function classifyImage(w,h){
-    const r=w/h;
-    if(r>=1.25) return 'landscape';
-    if(r<=0.8) return 'portrait';
-    return 'square';
-  }
-  function applyImageLayout(layout){
-    imageLayout=layout;
-    const el=$('productDetail');
-    el.classList.remove('image-landscape','image-portrait','image-square');
-    el.classList.add('image-'+layout);
-  }
-
   function updatePreview(){
     const c=calc();
     $('pvClient').textContent=value('clientName')||'-';
@@ -111,7 +84,6 @@
     $('pvOptions').textContent=value('options')||'-';
     $('pvCustom').textContent=value('custom')||'-';
     $('pvMoq').textContent=value('moq')||'-';
-    renderKeywords();
 
     $('pvQty').textContent=c.qty.toLocaleString('ko-KR');
     $('pvUnit').textContent=money(c.unit);
@@ -137,7 +109,6 @@
       const img=new Image();
       img.onload=()=>{
         imageNatural={width:img.naturalWidth,height:img.naturalHeight};
-        applyImageLayout(classifyImage(img.naturalWidth,img.naturalHeight));
         $('pvImage').src=imageData;
         $('pvImage').hidden=false;
         $('imagePlaceholder').hidden=true;
@@ -149,7 +120,6 @@
   function removeImage(){
     imageData='';
     imageNatural={width:0,height:0};
-    applyImageLayout('square');
     $('pvImage').removeAttribute('src');
     $('pvImage').hidden=true;
     $('imagePlaceholder').hidden=false;
@@ -221,15 +191,6 @@
       addText(s,value('productName')||'제품명',.48,1.24,3.55,.55,24,NAVY,true);
       addText(s,value('tagline'),.48,1.82,3.55,.30,12,INK,true);
       addText(s,value('description'),.48,2.18,3.55,.48,10.5,MUTED,false);
-
-      let tx=.48;
-      keywordList().slice(0,5).forEach(k=>{
-        const w=Math.min(1.15,Math.max(.68,.12*k.length+.35));
-        addRect(s,tx,2.72,w,.30,SOFT);
-        addText(s,k,tx+.08,2.77,w-.16,.18,10,NAVY,false,'center');
-        tx+=w+.08;
-      });
-
       const meta=[
         ['수신',value('clientName')||'-'],['견적번호',value('quoteNo')||'-'],
         ['견적일',formatDate($('quoteDate').value)],['유효기간',value('validity')||'-'],
@@ -244,8 +205,6 @@
       });
 
       let imgX=.48,imgW=3.42,specX=4.18,specW=3.59;
-      if(imageLayout==='landscape'){imgW=3.78;specX=4.53;specW=3.24;}
-      if(imageLayout==='portrait'){imgW=2.95;specX=3.73;specW=4.04;}
       const imgY=3.27,imgH=3.30;
       addRect(s,imgX,imgY,imgW,imgH,'F5F7FA',LINE);
       if(imageData){
@@ -329,6 +288,5 @@
   upload.addEventListener('drop',e=>setImage(e.dataTransfer?.files?.[0]));
 
   $('quoteDate').value=todayISO();
-  applyImageLayout('square');
   updatePreview();
 })();
