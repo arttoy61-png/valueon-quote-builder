@@ -32,6 +32,8 @@
           <label>견적번호<input id="quoteNo" type="text" value="VOM-20260929-01" autocomplete="off"></label>
           <label>견적일<input id="quoteDate" type="date"></label>
           <label>유효기간<input id="validity" type="text" value="발행일로부터 14일" autocomplete="off"></label>
+          <label>담당자<input id="manager" type="text" value="담당자 입력" autocomplete="off"></label>
+          <label>연락처<input id="contact" type="text" value="연락처 입력" autocomplete="off"></label>
         </div>
       </section>
 
@@ -46,12 +48,15 @@
         <button id="removeImage" class="text-button" type="button">사진 지우기</button>
         <label>제품명<input id="productName" type="text" value="354ml 손잡이형 머그" autocomplete="off"></label>
         <label>한 줄 설명<input id="tagline" type="text" value="일상에 자연스럽게 어울리는 컬러 머그" autocomplete="off"></label>
-        <label>상세 설명<textarea id="description" rows="3">첨부 이미지 기준으로 제품 사양과 공급 가능 옵션을 확인해 견적을 구성합니다.</textarea></label>
+        <label>상세 설명<textarea id="description" rows="3">감각적인 컬러와 실용적인 용량으로 브랜드 굿즈, 판촉물, 카페 상품 등 다양한 용도로 활용 가능합니다.</textarea></label>
+        <label>키워드 태그 <span class="label-hint">· 로 구분</span><input id="keywords" type="text" value="카페 · 기업 굿즈 · 브랜드 상품 · 판촉물 · 맞춤 제작" autocomplete="off"></label>
         <div class="field-grid two">
-          <label>규격 / 용량<input id="spec" type="text" value="354ml" autocomplete="off"></label>
-          <label>컬러 / 옵션<input id="options" type="text" value="8 COLORS" autocomplete="off"></label>
+          <label>용량 / 규격<input id="spec" type="text" value="354ml (12oz)" autocomplete="off"></label>
+          <label>사이즈<input id="size" type="text" value="약 Ø85 × H98 mm" autocomplete="off"></label>
+          <label>재질<input id="material" type="text" value="세라믹(도자기)" autocomplete="off"></label>
+          <label>옵션<input id="options" type="text" value="8 COLORS" autocomplete="off"></label>
           <label>커스텀<input id="custom" type="text" value="로고 인쇄 · 포장 협의" autocomplete="off"></label>
-          <label>MOQ<input id="moq" type="text" value="생산 조건 확인 후 안내" autocomplete="off"></label>
+          <label>최소주문수량<input id="moq" type="text" value="MOQ 500개부터 (협의 가능)" autocomplete="off"></label>
         </div>
       </section>
 
@@ -101,33 +106,37 @@
           </header>
 
           <section class="quote-title">
-            <div>
-              <p>MAKE BY VALUEON</p>
-              <h2>제품 소싱 견적서</h2>
+            <div class="quote-product-intro">
+              <p>PRODUCT SOURCING QUOTATION</p>
+              <h2 id="pvProductName">354ml 손잡이형 머그</h2>
+              <strong id="pvTagline">일상에 자연스럽게 어울리는 컬러 머그</strong>
+              <p class="intro-description" id="pvDescription">감각적인 컬러와 실용적인 용량으로 브랜드 굿즈, 판촉물, 카페 상품 등 다양한 용도로 활용 가능합니다.</p>
+              <div class="keyword-tags" id="pvKeywords"></div>
             </div>
             <div class="quote-meta">
               <dl><dt>수신</dt><dd id="pvClient">업체명 입력</dd></dl>
               <dl><dt>견적번호</dt><dd id="pvQuoteNo">VOM-20260929-01</dd></dl>
               <dl><dt>견적일</dt><dd id="pvDate">-</dd></dl>
               <dl><dt>유효기간</dt><dd id="pvValidity">발행일로부터 14일</dd></dl>
+              <dl><dt>담당자</dt><dd id="pvManager">담당자 입력</dd></dl>
+              <dl><dt>연락처</dt><dd id="pvContact">연락처 입력</dd></dl>
             </div>
           </section>
 
-          <section class="product-hero">
+          <section class="product-detail image-square" id="productDetail">
             <div class="product-image-shell" id="pvImageShell">
               <div class="image-placeholder" id="imagePlaceholder"><b>PRODUCT IMAGE</b><span>왼쪽에서 제품 사진을 넣어주세요</span></div>
               <img id="pvImage" alt="제품 사진" hidden>
             </div>
-            <div class="product-copy">
-              <p class="mini-label">PRODUCT SOURCING</p>
-              <h3 id="pvProductName">354ml 손잡이형 머그</h3>
-              <strong id="pvTagline">일상에 자연스럽게 어울리는 컬러 머그</strong>
-              <p id="pvDescription">첨부 이미지 기준으로 제품 사양과 공급 가능 옵션을 확인해 견적을 구성합니다.</p>
-              <div class="spec-grid">
-                <div><span>SPEC</span><b id="pvSpec">354ml</b></div>
-                <div><span>OPTION</span><b id="pvOptions">8 COLORS</b></div>
-                <div><span>CUSTOM</span><b id="pvCustom">로고 인쇄 · 포장 협의</b></div>
-                <div><span>MOQ</span><b id="pvMoq">생산 조건 확인 후 안내</b></div>
+            <div class="product-specs">
+              <h3>제품 사양</h3>
+              <div class="spec-table">
+                <div><span>용량</span><b id="pvSpec">354ml (12oz)</b></div>
+                <div><span>사이즈</span><b id="pvSize">약 Ø85 × H98 mm</b></div>
+                <div><span>재질</span><b id="pvMaterial">세라믹(도자기)</b></div>
+                <div><span>옵션</span><b id="pvOptions">8 COLORS</b></div>
+                <div><span>커스텀</span><b id="pvCustom">로고 인쇄 · 포장 협의</b></div>
+                <div><span>최소주문수량</span><b id="pvMoq">MOQ 500개부터 (협의 가능)</b></div>
               </div>
             </div>
           </section>
@@ -139,13 +148,17 @@
               <div class="tr"><strong id="pvProductRow">354ml 손잡이형 머그</strong><span id="pvQty">100</span><span id="pvUnit">₩5,000</span><span id="pvSupply">₩500,000</span></div>
               <div class="tr compact"><strong>VAT</strong><span></span><span id="pvVatType">별도 10%</span><span id="pvVat">₩50,000</span></div>
               <div class="tr compact"><strong>운송비</strong><span></span><span id="pvShippingNote">별도 협의</span><span id="pvShipping">₩0</span></div>
-              <div class="tr total"><strong>최종 견적 합계</strong><span></span><span></span><b id="pvTotal">₩550,000</b></div>
             </div>
           </section>
 
           <section class="quote-note">
             <strong>견적 안내</strong>
             <p id="pvNote">단가는 수량, 옵션, 로고/인쇄, 포장 및 운송 조건에 따라 최종 확정됩니다.</p>
+          </section>
+
+          <section class="quote-total">
+            <strong>최종 견적 합계</strong>
+            <b id="pvTotal">₩550,000</b>
           </section>
 
           <footer class="quote-footer"><b>VALUEON MAKE</b><span>무엇이든 만들어드립니다.</span></footer>
