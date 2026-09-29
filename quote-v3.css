@@ -1,0 +1,48 @@
+/* Approved VALUEON quotation layout */
+.label-hint{font-weight:500;color:#8a96a8}
+.quote-paper{width:794px;height:1123px;padding:0 48px 28px;display:flex;flex-direction:column}
+.quote-top-line{margin:0 -48px}
+.quote-header{height:72px;flex:0 0 72px}
+.quote-brand{font-size:24px}.quote-type strong,.quote-type span{font-size:10px}
+.quote-title{flex:0 0 226px;display:grid;grid-template-columns:minmax(0,1fr) 306px;gap:26px;align-items:stretch;padding:23px 0 21px}
+.quote-product-intro{min-width:0;display:flex;flex-direction:column}
+.quote-product-intro>p:first-child{margin:0 0 8px;color:var(--blue);font-size:10.5px;font-weight:850;letter-spacing:.08em}
+.quote-product-intro h2{margin:0;color:var(--navy);font-size:31px;line-height:1.1;letter-spacing:-.055em;word-break:keep-all}
+.quote-product-intro>strong{display:block;margin-top:9px;color:#1e2f49;font-size:13.5px;line-height:1.35;word-break:keep-all}
+.quote-product-intro .intro-description{margin:10px 0 0;color:#5e6e84;font-size:10.8px;line-height:1.62;word-break:keep-all}
+.keyword-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:11px}
+.keyword-tags span{display:inline-flex;align-items:center;min-height:27px;padding:0 10px;background:#f0f4f9;color:#365173;font-size:10px;font-weight:650;white-space:nowrap}
+.quote-meta{display:grid;grid-template-columns:1fr;grid-template-rows:repeat(6,1fr);gap:0;align-self:stretch;border:1px solid #dce4ef}
+.quote-meta dl{margin:0;min-height:0;display:grid;grid-template-columns:78px minmax(0,1fr);border:0;border-bottom:1px solid #dce4ef}
+.quote-meta dl:last-child{border-bottom:0}
+.quote-meta dt{display:flex;align-items:center;padding:0 10px;background:#f1f5f9;color:var(--navy);font-size:10.5px;font-weight:800}
+.quote-meta dd{margin:0;display:flex;align-items:center;padding:0 11px;color:#30415a;font-size:10.5px;line-height:1.25;overflow:hidden;word-break:keep-all}
+.product-detail{flex:0 0 350px;display:grid;gap:28px;padding:0 0 20px;border-bottom:1px solid #dce4ef;align-items:stretch}
+.product-detail.image-landscape{grid-template-columns:55% minmax(0,45%)}
+.product-detail.image-square{grid-template-columns:50% minmax(0,50%)}
+.product-detail.image-portrait{grid-template-columns:41% minmax(0,59%)}
+.product-image-shell{height:330px;background:#f4f6f9;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.product-image-shell img{width:100%;height:100%;object-fit:contain;object-position:center}
+.image-placeholder b{font-size:12px}.image-placeholder span{font-size:10px}
+.product-specs{min-width:0;display:flex;flex-direction:column}
+.product-specs h3{margin:3px 0 10px;padding-bottom:8px;border-bottom:2px solid var(--navy);color:var(--navy);font-size:17px;letter-spacing:-.035em}
+.spec-table{flex:1;border-bottom:1px solid #dce4ef}
+.spec-table>div{min-height:48px;display:grid;grid-template-columns:94px minmax(0,1fr);border-bottom:1px solid #e2e7ee}
+.spec-table>div:last-child{border-bottom:0}
+.spec-table span,.spec-table b{display:flex;align-items:center;min-width:0;padding:0 11px}
+.spec-table span{background:#f4f7fa;color:var(--navy);font-size:10.5px;font-weight:800}
+.spec-table b{color:#30415a;font-size:10.8px;line-height:1.35;font-weight:650;word-break:keep-all}
+.quote-pricing{flex:0 0 204px;padding-top:20px}
+.section-title{margin-bottom:9px}.section-title span{font-size:10.5px}.section-title h4{font-size:17px}
+.tr{grid-template-columns:44% 13% 18% 25%;min-height:42px}
+.tr>span,.tr>strong,.tr>b{font-size:10.5px;padding:0 10px}
+.tr.head{min-height:32px}.tr.head span{font-size:10px}.tr.compact{min-height:39px}
+.quote-note{flex:0 0 76px;margin-top:10px;padding:12px 14px;display:grid;grid-template-columns:82px minmax(0,1fr);gap:14px;align-items:start;background:#f4f7fa;border:0}
+.quote-note strong{color:var(--navy);font-size:11px;line-height:1.5}
+.quote-note p{margin:0;color:#5c697b;font-size:10.5px;line-height:1.6}
+.quote-total{flex:0 0 62px;margin-top:10px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;background:var(--navy);color:#fff}
+.quote-total strong{font-size:17px;letter-spacing:-.03em}.quote-total b{font-size:22px;letter-spacing:-.03em}
+.quote-footer{position:static;left:auto;right:auto;bottom:auto;flex:0 0 42px;margin-top:12px;padding-top:11px;border-top:1px solid #bfcde0}
+.quote-footer b{font-size:10.5px}.quote-footer span{font-size:10px}
+@media(max-width:1350px){.quote-paper{transform:scale(.86);transform-origin:top center;margin-bottom:-157px}}
+@media print{@page{size:A4 portrait;margin:0}.quote-paper{width:210mm;height:297mm;padding-left:12.7mm;padding-right:12.7mm;padding-bottom:7.4mm}.quote-top-line{margin-left:-12.7mm;margin-right:-12.7mm}}
