@@ -46,3 +46,5 @@
 .quote-footer b{font-size:10.5px}.quote-footer span{font-size:10px}
 @media(max-width:1350px){.quote-paper{transform:scale(.86);transform-origin:top center;margin-bottom:-157px}}
 @media print{@page{size:A4 portrait;margin:0}.quote-paper{width:210mm;height:297mm;padding-left:12.7mm;padding-right:12.7mm;padding-bottom:7.4mm}.quote-top-line{margin-left:-12.7mm;margin-right:-12.7mm}}
+
+.quote-slogan{color:#31567f;font-size:10.5px;font-weight:600;white-space:nowrap}
