@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VALUEON QUOTE BUILDER</title>
+  <meta name="description" content="VALUEON MAKE 제품 소싱 견적서 생성기">
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">VALUEON <span>MAKE</span></div>
+    <div class="topbar-copy"><strong>QUOTATION BUILDER</strong><span>제품 소싱 견적서 생성기</span></div>
+  </header>
+
+  <main class="workspace">
+    <aside class="editor" aria-label="견적서 입력">
+      <section class="editor-head">
+        <p>PRODUCT SOURCING</p>
+        <h1>견적서 만들기</h1>
+        <span>왼쪽에서 입력하면 오른쪽 A안 견적서가 바로 바뀝니다.</span>
+      </section>
+
+      <section class="form-section">
+        <h2>01 · 기본 정보</h2>
+        <div class="field-grid two">
+          <label>수신 업체<input id="clientName" type="text" value="업체명 입력" autocomplete="off"></label>
+          <label>견적번호<input id="quoteNo" type="text" value="VOM-20260929-01" autocomplete="off"></label>
+          <label>견적일<input id="quoteDate" type="date"></label>
+          <label>유효기간<input id="validity" type="text" value="발행일로부터 14일" autocomplete="off"></label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2>02 · 제품</h2>
+        <label class="upload-box" for="productImage">
+          <input id="productImage" type="file" accept="image/*">
+          <span class="upload-icon">＋</span>
+          <strong>제품 사진 넣기</strong>
+          <small>JPG · PNG · WEBP / 클릭 또는 드래그</small>
+        </label>
+        <button id="removeImage" class="text-button" type="button">사진 지우기</button>
+        <label>제품명<input id="productName" type="text" value="354ml 손잡이형 머그" autocomplete="off"></label>
+        <label>한 줄 설명<input id="tagline" type="text" value="일상에 자연스럽게 어울리는 컬러 머그" autocomplete="off"></label>
+        <label>상세 설명<textarea id="description" rows="3">첨부 이미지 기준으로 제품 사양과 공급 가능 옵션을 확인해 견적을 구성합니다.</textarea></label>
+        <div class="field-grid two">
+          <label>규격 / 용량<input id="spec" type="text" value="354ml" autocomplete="off"></label>
+          <label>컬러 / 옵션<input id="options" type="text" value="8 COLORS" autocomplete="off"></label>
+          <label>커스텀<input id="custom" type="text" value="로고 인쇄 · 포장 협의" autocomplete="off"></label>
+          <label>MOQ<input id="moq" type="text" value="생산 조건 확인 후 안내" autocomplete="off"></label>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2>03 · 금액</h2>
+        <div class="field-grid two">
+          <label>수량<input id="quantity" type="number" min="0" step="1" value="100"></label>
+          <label>개당 단가<input id="unitPrice" type="number" min="0" step="1" value="5000"></label>
+          <label>VAT
+            <select id="vatType">
+              <option value="separate" selected>별도 (10% 자동)</option>
+              <option value="included">포함</option>
+            </select>
+          </label>
+          <label>운송비<input id="shipping" type="number" min="0" step="1" value="0"></label>
+        </div>
+        <label>운송 조건<input id="shippingNote" type="text" value="별도 협의" autocomplete="off"></label>
+        <label>견적 메모<textarea id="note" rows="3">단가는 수량, 옵션, 로고/인쇄, 포장 및 운송 조건에 따라 최종 확정됩니다.</textarea></label>
+      </section>
+
+      <section class="calc-card" aria-live="polite">
+        <div><span>공급가액</span><strong id="calcSupply">₩0</strong></div>
+        <div><span>VAT</span><strong id="calcVat">₩0</strong></div>
+        <div><span>운송비</span><strong id="calcShipping">₩0</strong></div>
+        <div class="total"><span>최종 합계</span><strong id="calcTotal">₩0</strong></div>
+      </section>
+
+      <section class="actions">
+        <button id="pdfBtn" class="primary" type="button">PDF 저장</button>
+        <button id="pptBtn" class="primary blue" type="button">PPTX 저장</button>
+        <button id="resetBtn" class="secondary" type="button">초기화</button>
+      </section>
+      <p class="privacy-note">입력한 사진과 금액은 서버에 저장하지 않고 현재 브라우저에서만 사용합니다.</p>
+    </aside>
+
+    <section class="preview-area" aria-label="견적서 미리보기">
+      <div class="preview-toolbar">
+        <span>A4 · A안 제품 제안형</span>
+        <strong>실시간 미리보기</strong>
+      </div>
+      <div class="paper-wrap">
+        <article class="quote-paper" id="quotePaper">
+          <div class="quote-top-line"></div>
+          <header class="quote-header">
+            <div class="quote-brand">VALUEON <span>MAKE</span></div>
+            <div class="quote-type"><strong>PRODUCT SOURCING QUOTATION</strong><span>제품 소싱 견적서</span></div>
+          </header>
+
+          <section class="quote-title">
+            <div>
+              <p>MAKE BY VALUEON</p>
+              <h2>제품 소싱 견적서</h2>
+            </div>
+            <div class="quote-meta">
+              <dl><dt>수신</dt><dd id="pvClient">업체명 입력</dd></dl>
+              <dl><dt>견적번호</dt><dd id="pvQuoteNo">VOM-20260929-01</dd></dl>
+              <dl><dt>견적일</dt><dd id="pvDate">-</dd></dl>
+              <dl><dt>유효기간</dt><dd id="pvValidity">발행일로부터 14일</dd></dl>
+            </div>
+          </section>
+
+          <section class="product-hero">
+            <div class="product-image-shell" id="pvImageShell">
+              <div class="image-placeholder" id="imagePlaceholder"><b>PRODUCT IMAGE</b><span>왼쪽에서 제품 사진을 넣어주세요</span></div>
+              <img id="pvImage" alt="제품 사진" hidden>
+            </div>
+            <div class="product-copy">
+              <p class="mini-label">PRODUCT SOURCING</p>
+              <h3 id="pvProductName">354ml 손잡이형 머그</h3>
+              <strong id="pvTagline">일상에 자연스럽게 어울리는 컬러 머그</strong>
+              <p id="pvDescription">첨부 이미지 기준으로 제품 사양과 공급 가능 옵션을 확인해 견적을 구성합니다.</p>
+              <div class="spec-grid">
+                <div><span>SPEC</span><b id="pvSpec">354ml</b></div>
+                <div><span>OPTION</span><b id="pvOptions">8 COLORS</b></div>
+                <div><span>CUSTOM</span><b id="pvCustom">로고 인쇄 · 포장 협의</b></div>
+                <div><span>MOQ</span><b id="pvMoq">생산 조건 확인 후 안내</b></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="quote-pricing">
+            <div class="section-title"><span>QUOTATION</span><h4>견적 금액</h4></div>
+            <div class="price-table">
+              <div class="tr head"><span>항목</span><span>수량</span><span>단가</span><span>금액</span></div>
+              <div class="tr"><strong id="pvProductRow">354ml 손잡이형 머그</strong><span id="pvQty">100</span><span id="pvUnit">₩5,000</span><span id="pvSupply">₩500,000</span></div>
+              <div class="tr compact"><strong>VAT</strong><span></span><span id="pvVatType">별도 10%</span><span id="pvVat">₩50,000</span></div>
+              <div class="tr compact"><strong>운송비</strong><span></span><span id="pvShippingNote">별도 협의</span><span id="pvShipping">₩0</span></div>
+              <div class="tr total"><strong>최종 견적 합계</strong><span></span><span></span><b id="pvTotal">₩550,000</b></div>
+            </div>
+          </section>
+
+          <section class="quote-note">
+            <strong>견적 안내</strong>
+            <p id="pvNote">단가는 수량, 옵션, 로고/인쇄, 포장 및 운송 조건에 따라 최종 확정됩니다.</p>
+          </section>
+
+          <footer class="quote-footer"><b>VALUEON MAKE</b><span>무엇이든 만들어드립니다.</span></footer>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
