@@ -10,8 +10,6 @@
 .quote-product-intro h2{margin:0;color:var(--navy);font-size:31px;line-height:1.1;letter-spacing:-.055em;word-break:keep-all}
 .quote-product-intro>strong{display:block;margin-top:9px;color:#1e2f49;font-size:13.5px;line-height:1.35;word-break:keep-all}
 .quote-product-intro .intro-description{margin:10px 0 0;color:#5e6e84;font-size:10.8px;line-height:1.62;word-break:keep-all}
-.keyword-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:11px}
-.keyword-tags span{display:inline-flex;align-items:center;min-height:27px;padding:0 10px;background:#f0f4f9;color:#365173;font-size:10px;font-weight:650;white-space:nowrap}
 .quote-meta{display:grid;grid-template-columns:1fr;grid-template-rows:repeat(6,1fr);gap:0;align-self:stretch;border:1px solid #dce4ef}
 .quote-meta dl{margin:0;min-height:0;display:grid;grid-template-columns:78px minmax(0,1fr);border:0;border-bottom:1px solid #dce4ef}
 .quote-meta dl:last-child{border-bottom:0}
@@ -48,3 +46,9 @@
 @media print{@page{size:A4 portrait;margin:0}.quote-paper{width:210mm;height:297mm;padding-left:12.7mm;padding-right:12.7mm;padding-bottom:7.4mm}.quote-top-line{margin-left:-12.7mm;margin-right:-12.7mm}}
 
 .quote-slogan{color:#31567f;font-size:10.5px;font-weight:600;white-space:nowrap}
+
+/* final fixed image box */
+.product-detail,.product-detail.image-landscape,.product-detail.image-square,.product-detail.image-portrait{
+  grid-template-columns:50% minmax(0,50%);
+}
+.product-image-shell{height:330px}
